@@ -25,8 +25,10 @@
 - 在对搜索窗口进行变换时，循环从外到内依次为 （theta, x, y）
 - map中每个栅格的概率计算公式为：
 
-![](https://latex.codecogs.com/svg.latex?\log\frac{P}{1-P}=\log\frac{p}{1-p}*n})
+![](https://github.com/chenyr0021/Realtime_correlative_scan_matching/blob/main/svg.latex.svg)
+
 
 等式右边为落在该栅格内的点的个数乘以传感器的对数几率，其中p为传感器置信度
+
 等式左边为该栅格的总概率的对数几率，P即为该栅格的概率值
 
