@@ -17,6 +17,27 @@ def scan2coor(scan, angle_min, increment):
         angle += increment
     return np.array(pcl)
 
+def rasterization(coordinates, grid_size, p=0.8, lidar_range=10):
+    """
+    Rasterize coordinates to grid map
+    :param coordinates: input coordinates
+    :param grid_size: length of grid, meter
+    :param p: confidence of sensor
+    :param lidar_range: valid LIDAR range
+    :return: grid map
+    """
+    grid_coor = (coordinates / grid_size).astype(np.int)
+    add = np.log(p / (1 - p))
+    size = int(lidar_range/grid_size)
+    map = np.zeros((size, size))
+    for i in range(grid_coor.shape[0]):
+        # lidar coordinate -> image coordinate
+        x = size // 2 - grid_coor[i][1]
+        y = size // 2 + grid_coor[i][0]
+        if 0 <= x < size and 0 <= y < size:
+            map[x][y] += add
+    map = np.exp(map) / (1 + np.exp(map))
+    return map
 
 def transform(pcl, trans_mat):
     """Transformation of coordinates"""
